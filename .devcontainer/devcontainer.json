@@ -1,0 +1,40 @@
+{
+	"name": "Node.js & TypeScript",
+	"build": {
+		"dockerfile": "Dockerfile",
+		// Update 'VARIANT' to pick a Node version: 10, 12, 14
+		"args": { "VARIANT": "14" }
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+		"ms-azuretools.vscode-azurefunctions",
+		"ms-azuretools.vscode-docker",
+		"ms-vscode.azurecli",
+		"esbenp.prettier-vscode",
+		"hookyqr.beautify",
+		"coenraads.bracket-pair-colorizer",
+		"visualstudioexptteam.vscodeintellicode",
+		"streetsidesoftware.code-spell-checker",
+		"mikestead.dotenv",
+		"nucllear.vscode-extension-auto-import"
+	],
+	"runArgs": ["--init"],
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3000],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "apt-get update && apt-get install links -y",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "node"
+}
