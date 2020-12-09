@@ -4,7 +4,7 @@
       "name": "message",
       "type": "serviceBusTrigger",
       "direction": "in",
-      "queueName": "tslavik",
+      "queueName": "test",
       "connection": "tslavik_SERVICEBUS",
       "isSessionsEnabled":"true"
     }
