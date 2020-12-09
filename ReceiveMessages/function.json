@@ -2,8 +2,8 @@
   "bindings": [
     {
       "name": "message",
-      "type": "serviceBus",
-      "direction": "out",
+      "type": "serviceBusTrigger",
+      "direction": "in",
       "queueName": "tslavik",
       "connection": "tslavik_SERVICEBUS",
       "isSessionsEnabled":"true"
