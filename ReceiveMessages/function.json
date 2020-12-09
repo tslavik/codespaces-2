@@ -2,7 +2,7 @@
   "bindings": [
     {
       "name": "message",
-      "type": "serviceBusTrigger",
+      "type": "serviceBus",
       "direction": "out",
       "queueName": "tslavik",
       "connection": "tslavik_SERVICEBUS",
