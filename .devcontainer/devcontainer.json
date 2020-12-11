@@ -33,7 +33,7 @@
 	"forwardPorts": [3000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "cp ~/dotfiles/.npmrc ~/",
+	"postCreateCommand": "echo $HOME & cp ~/dotfiles/.npmrc ~/",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "node"
