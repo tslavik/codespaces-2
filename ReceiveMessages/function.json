@@ -1,14 +1,21 @@
 {
   "bindings": [
     {
-      "name": "message",
-      "type": "serviceBusTrigger",
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
       "direction": "in",
-      "queueName": "test",
-      "connection": "tslavik_SERVICEBUS",
-      "isSessionsEnabled":"true"
+      "name": "req",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
     }
   ],
   
+      
   "scriptFile": "../dist/ReceiveMessages/index.js"
 }
