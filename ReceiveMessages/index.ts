@@ -4,25 +4,21 @@ import {AzureFunction, Context, HttpRequest} from "@azure/functions"
 
 const _start = moment();
 let _messages = 0;
+    const connectionString = process.env.SB_CONN_STR as string;
+    const queueName = "test";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void>  {
     context.log('Start Receiving', req.body);
     
 
     
-    const queueName = process.env.QUEUE_NAME_WITH_SESSIONS || "<queue name>";
+    // const queueName = process.env.QUEUE_NAME_WITH_SESSIONS || "<queue name>";
 
-    const connectionString = process.env.SERVICEBUS_CONNECTION_STRING as string;
-    const entityPath = process.env.QUEUE_NAME_WITH_SESSIONS as string;
 
-    const maxConcurrentCalls = process.argv.length > 2 ? parseInt(process.argv[2]) : 10;
-    const messages = process.argv.length > 3 ? parseInt(process.argv[3]) : 100;
 
-    if (!req.body) {
-      context.res = {
-          status: 400,
-      };
-  } else {
+    const maxConcurrentCalls = 10;
+    const messages = 1000;
+
 
 
     // Endpoint=sb://<your-namespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<shared-access-key>
@@ -32,25 +28,22 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     const writeResultsPromise = WriteResults(messages);
 
-    await RunTest(connectionString, entityPath, maxConcurrentCalls, messages);
+    await RunTest(connectionString, queueName, maxConcurrentCalls, messages);
     await writeResultsPromise;
-
-
-  }
     
 };
 
     async function RunTest(
       connectionString: string,
-      entityPath: string,
+      queueName: string,
       maxConcurrentCalls: number,
       messages: number
     ): Promise<void> {
       const ns = new ServiceBusClient(connectionString);
       const options:ServiceBusReceiverOptions = {receiveMode:"receiveAndDelete"};
 
-      const receiver = ns.createReceiver(entityPath,options);
-
+      const receiver = ns.createReceiver(queueName,options);
+      // const receiver = await ns.acceptSession(queueName, sessionId);
 
       const processMessage = async (message: ServiceBusMessage) => {
         console.log(`Received: ${message.sessionId} - ${message.body} `);
@@ -63,7 +56,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         processError
       });
     
-      await delay(60000);
+      await delay(10000);
     
       await receiver.close();
 
