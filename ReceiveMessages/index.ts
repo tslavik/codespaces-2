@@ -11,10 +11,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const sbClient = new ServiceBusClient(connectionString);
     const sessionId = "session-1";
     const queueName = "test";
-
-    // Endpoint=sb://<your-namespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<shared-access-key>
-
+    
     await receiveMsg(sbClient,sessionId,queueName)
+    context.res = {
+      status: 200
+      };
     context.log('The End');
     
 };
